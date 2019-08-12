@@ -28,3 +28,46 @@ E.g., fs.readFile() <> C++ function in V8
 * Swap panes: `o`
 * Kill pane: `x`
 
+## Modules
+
+Module document can be found [here](https://nodejs.org/api/).
+
+To import modules like this:
+
+````
+const fs = require('fs') // fs == module name
+fs.writeFile...
+````
+
+To turn your own files into modules:
+
+````
+// utils.js
+const name = 'Me'
+
+module.exports = name // this is what is referenced when importing this module
+
+````
+
+````
+// File 1
+const name = require(./utils.js')
+
+console.log(name)
+````
+
+To initialize your project directory to use npm (node package manager):
+
+`npm init`
+
+This creats a file `package.json` which manages dependencies.
+
+
+
+
+
+
+````
+
+
+
