@@ -60,14 +60,20 @@ To initialize your project directory to use npm (node package manager):
 
 `npm init`
 
-This creats a file `package.json` which manages dependencies.
+This creates a file `package.json` which manages dependencies.
+
+Packages can be found [here](https://www.npmjs.com).
+
+### Global Packages
+You can install packages globally by using `-g`.
+Global packages can be run as a command instead of being imported into a certain app.
+
+E.g., `nodemon` allows you just to change a file and have the changes picked up automatically, instead of having to rerun node.
 
 
+## Command line arguments
 
+Arguments can be accessed via `process.argv[n]`.
 
-
-
-````
-
-
+`yargs` is a common CL argument parser.
 
