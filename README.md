@@ -47,6 +47,12 @@ const name = 'Me'
 
 module.exports = name // this is what is referenced when importing this module
 
+// To export multiple functions:
+module.exports = {
+    getNotes: getNotes,
+    addNote: addNote
+}
+
 ````
 
 ````
@@ -65,6 +71,7 @@ This creates a file `package.json` which manages dependencies.
 Packages can be found [here](https://www.npmjs.com).
 
 ### Global Packages
+
 You can install packages globally by using `-g`.
 Global packages can be run as a command instead of being imported into a certain app.
 
@@ -76,4 +83,23 @@ E.g., `nodemon` allows you just to change a file and have the changes picked up 
 Arguments can be accessed via `process.argv[n]`.
 
 `yargs` is a common CL argument parser.
+
+## JSON serialization
+
+JSON serialization can be done as usual:
+
+````
+const book = {
+    title: 'Ego is the Enemy',
+    author: 'Ryan Hoiday'
+}
+
+const bookJSON = JSON.stringify(book)
+console.log(bookJSON)
+
+const parsedData = JSON.parse(bookJSON)
+console.log(parsedData.author)  
+
+````
+
 
