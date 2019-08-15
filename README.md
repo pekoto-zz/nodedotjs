@@ -28,7 +28,7 @@ E.g., fs.readFile() <> C++ function in V8
 * Swap panes: `o`
 * Kill pane: `x`
 
-## Modules
+## Modules
 
 Module document can be found [here](https://nodejs.org/api/).
 
@@ -78,7 +78,7 @@ Global packages can be run as a command instead of being imported into a certain
 E.g., `nodemon` allows you just to change a file and have the changes picked up automatically, instead of having to rerun node.
 
 
-## Command line arguments
+## Command line arguments
 
 Arguments can be accessed via `process.argv[n]`.
 
@@ -102,4 +102,31 @@ console.log(parsedData.author)
 
 ````
 
+## ES6 Arrow functions
+
+ES6 = ECMA script = formal name for JavaScript.
+
+````
+// Long form
+const square = (x) => {
+    return x * x;
+}
+
+// Short form
+const square = (x) => x*x;
+
+// Class function (normally can't access this)
+const event = {
+    name: 'Birthday Party',
+    guestList: ['Graham', 'Jen', 'Mike'],
+    printGuestList() {
+        console.log('Guest list for ' + this.name)
+
+        this.guestList.forEach((guest) => {
+            console.log(guest + ' is attending ' + this.name)
+        })
+    }
+}
+
+````
 
