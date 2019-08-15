@@ -130,3 +130,12 @@ const event = {
 
 ````
 
+## Debugging
+
+Add `debugger` command to set a breakpoint.
+Then run node as `node inspect...` to break.
+
+Pull up Chrome and go to `chrome://inspect` > Add folder to workspace.
+
+After finishing, type `restart` while console is in debug to debug again.
+
