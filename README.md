@@ -167,3 +167,17 @@ Now, the callback queue will only be emptied when the callstack is empty. I.e., 
 Events --> Callback queue --> Call stack
 ````
 
+## NPM request/error handling
+
+````
+request({ url:url, json:true }, (error, response) => {
+    if (error) {
+        console.log('Unable to connect to weather service')
+    } else if (response.body.error) {
+        // HTTP error code
+        console.log('Unable to find location')
+    } else {
+        console.log(response.body.daily.data[0].summary + ' It is currently ' + response.body.currently.temperature)
+    }
+})
+````
