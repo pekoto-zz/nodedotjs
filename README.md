@@ -198,3 +198,31 @@ add(1, 4, (sum) => {
 })
 ````
 
+### Callbacks with error handling
+
+Generally the callback will return both an error and data, and then returned undefined for one or the other based on the API call result.
+
+````
+const getWeather = (longitude, latitude, callback) => {
+    url = 'https://api.darksky.net/forecast/3544672e2d5906402eea3ffd902a8c95/' + longitude + ',' + latitude + '?units=si&lang=ja'
+
+    request( {url:url, json:true}, (error, response) => {
+        if (error) {
+            callback('Unable to connect to weather services', undefined)
+        } else if (response.body.error) {
+            callback('Unable to find weather for specified longitude/latitude', undefined)
+        } else {
+            callback(undefined, {
+                summary: response.body.daily.data[0].summary,
+                currentTemp: response.body.currently.temperature
+            })
+        }
+    })
+}
+
+getWeather(35.6762,139.6503, (error, data) => {
+    console.log('Summary: ' + data.summary)
+    console.log('Temp: ' + data.currentTemp)
+})
+
+````
