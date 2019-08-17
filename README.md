@@ -139,3 +139,31 @@ Pull up Chrome and go to `chrome://inspect` > Add folder to workspace.
 
 After finishing, type `restart` while console is in debug to debug again.
 
+## Async Models
+
+````
+setTimeout(() => {                  // Event
+    console.log('Two seconds')      // Callback
+}, 2000)
+
+setTimeout(() => {                  // Event
+    console.log('Zero seconds')      // Callback
+}, 0)
+````
+
+Now, the __callback queue__ maintains a list of all of the functions to be executed.
+
+When a given event fires:
+
+1. The callback is added to the callback queue
+2. The function moves from the callback queue to the call stack
+3. The function executes
+
+E.g., After 0 seconds, `console.log` is added to the callback queue, and then added to the call stack, and then executes.
+
+Now, the callback queue will only be emptied when the callstack is empty. I.e., callbacks will be executed after synchronous functions finish.
+
+````
+Events --> Callback queue --> Call stack
+````
+
