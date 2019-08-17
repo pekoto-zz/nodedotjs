@@ -181,3 +181,20 @@ request({ url:url, json:true }, (error, response) => {
     }
 })
 ````
+
+## Callbacks with return values
+
+To make a function async, we take a callback in, and pass back the data you want to return into it.
+
+````
+const add = (a, b, callback) => {
+    setTimeout(() => {
+        callback(a+b)
+    }, 2000)
+}
+
+add(1, 4, (sum) => {
+    console.log(sum) // Should print: 5
+})
+````
+
