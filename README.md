@@ -130,3 +130,99 @@ const event = {
 
 ````
 
+## Debugging
+
+Add `debugger` command to set a breakpoint.
+Then run node as `node inspect...` to break.
+
+Pull up Chrome and go to `chrome://inspect` > Add folder to workspace.
+
+After finishing, type `restart` while console is in debug to debug again.
+
+## Async Models
+
+````
+setTimeout(() => {                  // Event
+    console.log('Two seconds')      // Callback
+}, 2000)
+
+setTimeout(() => {                  // Event
+    console.log('Zero seconds')      // Callback
+}, 0)
+````
+
+Now, the __callback queue__ maintains a list of all of the functions to be executed.
+
+When a given event fires:
+
+1. The callback is added to the callback queue
+2. The function moves from the callback queue to the call stack
+3. The function executes
+
+E.g., After 0 seconds, `console.log` is added to the callback queue, and then added to the call stack, and then executes.
+
+Now, the callback queue will only be emptied when the callstack is empty. I.e., callbacks will be executed after synchronous functions finish.
+
+````
+Events --> Callback queue --> Call stack
+````
+
+## NPM request/error handling
+
+````
+request({ url:url, json:true }, (error, response) => {
+    if (error) {
+        console.log('Unable to connect to weather service')
+    } else if (response.body.error) {
+        // HTTP error code
+        console.log('Unable to find location')
+    } else {
+        console.log(response.body.daily.data[0].summary + ' It is currently ' + response.body.currently.temperature)
+    }
+})
+````
+
+## Callbacks with return values
+
+To make a function async, we take a callback in, and pass back the data you want to return into it.
+
+````
+const add = (a, b, callback) => {
+    setTimeout(() => {
+        callback(a+b)
+    }, 2000)
+}
+
+add(1, 4, (sum) => {
+    console.log(sum) // Should print: 5
+})
+````
+
+### Callbacks with error handling
+
+Generally the callback will return both an error and data, and then returned undefined for one or the other based on the API call result.
+
+````
+const getWeather = (longitude, latitude, callback) => {
+    url = 'https://api.darksky.net/forecast/3544672e2d5906402eea3ffd902a8c95/' + longitude + ',' + latitude + '?units=si&lang=ja'
+
+    request( {url:url, json:true}, (error, response) => {
+        if (error) {
+            callback('Unable to connect to weather services', undefined)
+        } else if (response.body.error) {
+            callback('Unable to find weather for specified longitude/latitude', undefined)
+        } else {
+            callback(undefined, {
+                summary: response.body.daily.data[0].summary,
+                currentTemp: response.body.currently.temperature
+            })
+        }
+    })
+}
+
+getWeather(35.6762,139.6503, (error, data) => {
+    console.log('Summary: ' + data.summary)
+    console.log('Temp: ' + data.currentTemp)
+})
+
+````
