@@ -226,3 +226,77 @@ getWeather(35.6762,139.6503, (error, data) => {
 })
 
 ````
+
+## Property Syntax Shorthand
+
+Class variables with the same name as a previously delcared variable will be automatically assigned.
+
+````
+// Name will be assigned to 'Graham'
+const name = 'Graham'
+const userAge = 27
+ 
+const user = {
+   name,
+   age: userAge,
+   location: 'Tokyo'
+}
+
+````
+
+## Object destructuring
+
+Object properties can be automatically assigned to variables.
+
+````
+const product = {
+   label: 'Red notebook',
+   price: 3,
+   stock: 201,
+   salePrice: undefined
+}
+ 
+const {label:productLabel, stock, rating = 5 /*Default IFF no product value in object*/ } = product
+ 
+//console.log(productLabel)
+//console.log(stock)
+//console.log(rating)
+ 
+// Destructuring within a function
+ 
+const transaction = (type, {label, stock}) => {
+   console.log(type, label, stock)
+}
+ 
+transaction('order', product)
+
+````
+
+## Path variables
+
+````
+console.log(__dirname)    // absolute path to directory
+console.log(__filename)    // absolute path to file
+````
+
+These are needed if you need to reference some static file in your solution.
+
+Use ````path.join(__dirname, ‘../public’)```` to go up a level, out of src, and into the public directory to get a static file.
+
+## ES6 Default Parameters
+
+Just use `=` after the parameter name.
+
+````
+Just use an = after the parameter name.
+
+const greeter = (name='Anon', age) => {
+   console.log('Hello ' + name)
+}
+ 
+// Hello Graham
+greeter('Graham')
+ 
+// Hello Anon
+greeter()
+````
