@@ -424,3 +424,18 @@ doWork().then((result) => {
 })
 
 ````
+
+## Bcrpyt hashing
+
+````
+Setup: 
+
+[Cient] password --> 
+[DB] hashedpassword+salt
+
+Retrieval:
+
+[Client] password -->
+[DB] Extract salt --> hash password with stored salt --> check if matches DB password 
+
+````
