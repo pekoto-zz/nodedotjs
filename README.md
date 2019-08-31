@@ -403,12 +403,13 @@ const add = (a, b) => {
         }, 2000)
     })
 }
-```
+````
 
 Using await we can call like a normal function.
 It also lets you have all the variables in the same scope.
 
 ````
+
 const doWork = async () => {
     const sum = await add(1, 99)
     const sum2 = await add(sum, 50)
@@ -421,4 +422,5 @@ doWork().then((result) => {
 }).catch((error) => {
     console.log(error)
 })
+
 ````
