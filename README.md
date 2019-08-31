@@ -439,3 +439,26 @@ Retrieval:
 [DB] Extract salt --> hash password with stored salt --> check if matches DB password 
 
 ````
+
+## JWTs
+
+JWTs have the following 3 components, separated by .s: A.B.C:
+
+* A: base64 encoded meta info (e.g., this is a JWT token)
+* B: payload, base64 encoded string of data we provided
+* C: signature, used to verify the token
+
+We can sign a token like this:
+````
+    const token = jwt.sign({ _id:'abc123' /* unique val to identify user */}, 'thisisthejwtsecret' /* secret to sign token */, { expiresIn: '7 days'}) // Returns new token
+````
+(Give it an ID and expiration.)
+
+When we want to decrypt the token to verify the user, we can do it like this:
+
+````
+const data = jwt.verify(token, 'thisisthejwtsecret')
+
+````
+
+This will give us the ID back out.
