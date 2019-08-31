@@ -457,7 +457,8 @@ We can sign a token like this:
 The tokens are sent in the request header:
 
 ````
-Bearer [TOKEN]
+Key: Authorization
+Value: Bearer [TOKEN]
 ````
 
 When we want to decrypt the token to verify the user, we can do it like this:
