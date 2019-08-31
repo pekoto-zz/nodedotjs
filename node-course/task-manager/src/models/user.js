@@ -1,15 +1,17 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-// Define model
-const User = mongoose.model('User', {
+const userSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
-        trim: true
+    type: String,
+    required: true,
+    trim: true
     },
     email: {
         type: String,
+        unique: true,
         required: true,
         trim: true,
         lowercase: true,
@@ -38,7 +40,59 @@ const User = mongoose.model('User', {
                 throw new Error('Password cannot contain "password"')
             }
         }
-    }
+    },
+    tokens: [{
+        // Note this is an array so users
+        // can have tokens for mobile, desktop, etc.
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 })
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString()}, 'thisisthenodejscourse')
+
+    user.tokens = user.tokens.concat({token})
+    await user.save() // Make sure user saved to DB
+
+    return token
+}
+
+// Custom method that can be called on the model
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email: email })
+
+    if (!user) {
+        throw new Error('Unable to log in')
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to log in')
+    }
+
+    return user
+}
+
+// Hash plaintext passwords
+// pre/post -- do something just before/after an event
+userSchema.pre('save', async function (next) {
+    const user = this   // Convenience var
+
+    // True when pass created/updated
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    // Function is finished (no more async calls, etc.)
+    next()
+})
+
+// Define model
+const User = mongoose.model('User', userSchema)
 
 module.exports = User
