@@ -454,6 +454,12 @@ We can sign a token like this:
 ````
 (Give it an ID and expiration.)
 
+The tokens are sent in the request header:
+
+````
+Bearer [TOKEN]
+````
+
 When we want to decrypt the token to verify the user, we can do it like this:
 
 ````
