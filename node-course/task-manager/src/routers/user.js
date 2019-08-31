@@ -35,7 +35,7 @@ router.post('/users/login', async (req, res) => {
 })
 
 // Get users own data
-router.get('/users/me', auth, async (req, res) => {
+router.get('/users/me', auth, async (req, res) => { 
     // See auth middleware function (middleware/auth.js) to see
     // how we got the user based on the JWT value
     res.send(req.user)
