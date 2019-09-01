@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# Task manager files
+node-course/task-manager/config/
+node-course/task-manager/node_modules

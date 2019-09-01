@@ -4,10 +4,7 @@ const User = require('../models/user')
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
-        console.log('Token: ' + token)
-        const decoded = jwt.verify(token, 'thisisthenodejscourse')
-        console.log('Decoded: '+ decoded)
-
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token /* look for this token in user array */ })
         
 
@@ -15,6 +12,7 @@ const auth = async (req, res, next) => {
             throw new Error()   // Go to catch -- unauthenticated
         }
         
+        req.token = token
         req.user = user
         next()
     } catch (e) {
