@@ -469,3 +469,20 @@ const data = jwt.verify(token, 'thisisthejwtsecret')
 ````
 
 This will give us the ID back out.
+
+## Sending back data
+
+When sending back data from the server, be careful not to send back sensitive things. You can instead return a `public profile` version of the object that does not include things like passwords or secure tokens.
+
+````
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+````
+
